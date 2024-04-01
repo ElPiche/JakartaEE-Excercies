@@ -16,6 +16,7 @@ class Ejemplo06Test {
 	@Test
 	void test() {
 		pulicadorEvento.publicarEvento("Algo nuevo ha sucedido");
+		pulicadorEvento.publishEvent("Nuevo evento creado por luquita");
 	}
 
 }

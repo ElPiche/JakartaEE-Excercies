@@ -5,7 +5,7 @@ import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class PublicadorEvento {
+public class PublicadorEvento  implements PublishEventInterface{
 	
 	@Inject
 	private Event<Evento> eventoConcreto;
@@ -20,4 +20,19 @@ public class PublicadorEvento {
 		
 		System.out.println("Notificando evento: " + descEvento);
 	}
+	
+	@Inject
+	private Event<Evento> newEvent;
+	
+	public void publishEvent(String eventDescription) {
+		
+		Evento e2 = new Evento(eventDescription);
+		newEvent.fire(e2);
+		System.out.println("Notificando nuevo evento creado por Lucas para todos los observadores: " + eventDescription);
+		
+	}
+	 
 }
+
+
+
