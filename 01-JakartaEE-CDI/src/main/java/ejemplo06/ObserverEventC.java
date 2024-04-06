@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
+//este observador escucha una nueva instancia, pero del mismo evento.
 public class ObserverEventC {
 	
 	public void eventC(@Observes Evento event){

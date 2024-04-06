@@ -15,8 +15,10 @@ class Ejemplo06Test {
 	
 	@Test
 	void test() {
+		//Primer evento 3 observadores (a,b y c)
 		pulicadorEvento.publicarEvento("Algo nuevo ha sucedido");
-		pulicadorEvento.publishEvent("Nuevo evento creado por luquita");
+		//segundo evento 1 observador (NewObserver)
+		pulicadorEvento.publishEvent("Nuevo evento creado");
 	}
 
 }

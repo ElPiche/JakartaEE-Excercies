@@ -22,11 +22,11 @@ public class PublicadorEvento  implements PublishEventInterface{
 	}
 	
 	@Inject
-	private Event<Evento> newEvent;
+	private Event<Evento2> newEvent;
 	
 	public void publishEvent(String eventDescription) {
 		
-		Evento e2 = new Evento(eventDescription);
+		Evento2 e2 = new Evento2(eventDescription);
 		newEvent.fire(e2);
 		System.out.println("Notificando nuevo evento creado por Lucas para todos los observadores: " + eventDescription);
 		
