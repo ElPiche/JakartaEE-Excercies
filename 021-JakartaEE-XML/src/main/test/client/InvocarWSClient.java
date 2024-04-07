@@ -39,5 +39,14 @@ class InvocarWSClient {
 
 	}
 	
+	@Test
+	@DisplayName("Invocado a webservice de total de pagos")
+	void montoTotal() {
+		PagoSOAPService	service = new PagoSOAPService();
+		PagoSOAPcli pagoPort = service.getPagoSOAPPort();
+		//ver como llevar el nuevo metodo a los web services
+		//pagoPort.
+	}
+	
 	
 }

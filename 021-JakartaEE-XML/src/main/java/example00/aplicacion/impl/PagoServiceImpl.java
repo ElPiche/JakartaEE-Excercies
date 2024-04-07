@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example00.aplicacion.PagoService;
-import example00.dominio.Pago;
+import example00.dominio.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -35,6 +35,18 @@ public class PagoServiceImpl implements PagoService {
 		return this.pagos;
 		
 		
+	}
+	
+	//LT
+	@Override
+	public int montoTotal() {
+		int montos = 0;
+		List<Pago> pagosASumar = obtenerPagos();
+		for(Pago pagos : pagosASumar) {
+			montos = montos + pagos.getMonto();
+		}
+		
+		return montos;
 	}
 
 }

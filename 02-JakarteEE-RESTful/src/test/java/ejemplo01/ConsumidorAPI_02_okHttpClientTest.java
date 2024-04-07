@@ -16,7 +16,7 @@ import okhttp3.Response;
 
 //@Disabled
 public class ConsumidorAPI_02_okHttpClientTest {
-
+	
 	@Test
 	@DisplayName("Insertar clientes con OkHttpClient")
 	public void insertarCliente() {
@@ -44,7 +44,7 @@ public class ConsumidorAPI_02_okHttpClientTest {
 		}
 		
 	}
-	
+	/*
 	@Test
 	@DisplayName("Obtener clientes con  OkHttpClient")
 	public void obtenerClientes() {
@@ -68,4 +68,49 @@ public class ConsumidorAPI_02_okHttpClientTest {
 		}
 		
 	}
+	*/
+	/*
+	@Test
+	@DisplayName("Existe cliente")
+	public void existeCliente(){
+		OkHttpClient cliente = new OkHttpClient();
+
+		
+		Request request = new Request.Builder()
+				.url("http://localhost:8080/02_jakartaRESTful_ejemplo/api/clientes/existe?nombre=Luis")
+				.build();
+		
+		try {
+			Response response = cliente.newCall(request).execute();
+			System.out.println(response.body().string());
+			
+			assertThat(response.code() == 200);
+			
+		} catch (IOException e) {
+			System.out.println("Se produjo una exception");
+		}
+		
+	}
+	*/
+	@Test
+	@DisplayName("Existe cliente RPC")
+	public void existeClienteRPC() {
+		OkHttpClient cliente = new OkHttpClient();
+
+		Request request = new Request.Builder()
+				.url("http://localhost:8080/02_jakartaRESTful_ejemplo/api/clientes/existeCliente?nombre=Felipe")
+				.build();
+		
+		try {
+			Response response = cliente.newCall(request).execute();
+			System.out.println(response.body().string());
+			
+			assertThat(response.code() == 200);
+			
+		} catch (IOException e) {
+			System.out.println("Se produjo una exception");
+		}
+		
+	}
+
 }

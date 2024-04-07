@@ -14,6 +14,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 
@@ -80,7 +81,6 @@ public class ClienteRESTful {
 	}
 	
 	
-	
 	/**
 	 * 
 	 * Observar que nada me impide llamar a borrar utilizando GET
@@ -138,6 +138,19 @@ public class ClienteRESTful {
 		clienteService.actualizarCliente(cli);
 	}
 	
-
+	
+	/*
+	 * Cuando @Path("/{nombre}") Esta asi tira error al tratar de parsear el parametro como numero
+	 * Y si se usa @PathParam devuelve false todo el tiempo ya que devuelve null
+	 * */
+	
+	@GET
+	@Path("/existe")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Boolean existe(@QueryParam("nombre") String nombre) {
+		System.out.println("invocando operacion de existencia de cliente con nombre: " + nombre);
+		return clienteService.existe(nombre);
+	}
+	
 	
 }

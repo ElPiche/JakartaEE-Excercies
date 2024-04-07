@@ -72,4 +72,15 @@ public class ClienteRPC {
 		clienteService.borrarCliente(id);
 	}
 	
+	@GET
+	@Path("/existeCliente")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Boolean existe(@QueryParam("nombre") String nombre) {
+		System.out.println("invocando operacion de existencia de cliente con nombre: " + nombre);
+		return clienteService.existe(nombre);
+	}
+	
+	
+	
+	
 }

@@ -82,5 +82,7 @@ class ConsumidorAPI_01_JakartaClientTest {
 		System.out.println(cliente.toString());
 		
 	}
+	
+	
 
 }

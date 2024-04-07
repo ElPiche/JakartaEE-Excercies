@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="85da265d-35d1-40c4-96de-664f2f5e87a0" activeEnvironment="Default" name="SoapTest" resourceRoot="" soapui-version="5.7.2" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="441de119-b2b3-4f2b-b088-ad58818cdb59" wsaVersion="NONE" name="PagoSOAPServiceSoapBinding" type="wsdl" bindingName="{http://soap.ws.interfaces.example00/}PagoSOAPServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/home/lucasvm/Escritorio/GitHub/JakartaEE-Excercies/021-JakartaEE-XML/target/server/standalone/data/wsdl/021-JakartaEE-XML.war/PagoSOAPService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/lucasvm/Escritorio/GitHub/JakartaEE-Excercies/021-JakartaEE-XML/target/server/standalone/data/wsdl/021-JakartaEE-XML.war/PagoSOAPService.wsdl"><con:part><con:url>file:/home/lucasvm/Escritorio/GitHub/JakartaEE-Excercies/021-JakartaEE-XML/target/server/standalone/data/wsdl/021-JakartaEE-XML.war/PagoSOAPService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="PagoSOAPService" targetNamespace="http://soap.ws.interfaces.example00/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.ws.interfaces.example00/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://soap.ws.interfaces.example00/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="pago">
+        <xs:sequence>
+          <xs:element name="id" type="xs:int"/>
+          <xs:element name="monto" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType final="#all" name="pagoArray">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:pago"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="obtenerPagos"></wsdl:message>
+  <wsdl:message name="realizarPagoResponse">
+    <wsdl:part name="idPago" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerPagosResponse">
+    <wsdl:part name="pagos" type="tns:pagoArray"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="realizarPago">
+    <wsdl:part name="monto" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PagoSOAP">
+    <wsdl:operation name="obtenerPagos">
+      <wsdl:input message="tns:obtenerPagos" name="obtenerPagos"></wsdl:input>
+      <wsdl:output message="tns:obtenerPagosResponse" name="obtenerPagosResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="realizarPago">
+      <wsdl:input message="tns:realizarPago" name="realizarPago"></wsdl:input>
+      <wsdl:output message="tns:realizarPagoResponse" name="realizarPagoResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PagoSOAPServiceSoapBinding" type="tns:PagoSOAP">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="obtenerPagos">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="obtenerPagos">
+        <soap:body namespace="http://soap.ws.interfaces.example00/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="obtenerPagosResponse">
+        <soap:body namespace="http://soap.ws.interfaces.example00/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="realizarPago">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="realizarPago">
+        <soap:body namespace="http://soap.ws.interfaces.example00/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="realizarPagoResponse">
+        <soap:body namespace="http://soap.ws.interfaces.example00/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PagoSOAPService">
+    <wsdl:port binding="tns:PagoSOAPServiceSoapBinding" name="PagoSOAPPort">
+      <soap:address location="http://localhost:8080/021-JakartaEE-XML/PagoSOAP"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/021-JakartaEE-XML/PagoSOAP</con:endpoint></con:endpoints><con:operation id="728875ad-ce6c-450d-813c-1150ed4ac8af" isOneWay="false" action="" name="obtenerPagos" bindingOperationName="obtenerPagos" type="Request-Response" outputName="obtenerPagosResponse" inputName="obtenerPagos" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d97dc8ca-5314-4493-950f-39d7cc1f08a3" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/021-JakartaEE-XML/PagoSOAP</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.interfaces.example00/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:obtenerPagos/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.ws.interfaces.example00/PagoSOAP/obtenerPagos"/></con:call><con:call id="8e663149-f443-4c03-befb-fb9b857e5b2b" name="Request 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/021-JakartaEE-XML/PagoSOAP</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.interfaces.example00/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:obtenerPagos/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.ws.interfaces.example00/PagoSOAP/obtenerPagos"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3450f724-d5ed-4e2d-8533-d19452548b4f" isOneWay="false" action="" name="realizarPago" bindingOperationName="realizarPago" type="Request-Response" outputName="realizarPagoResponse" inputName="realizarPago" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="aebd9fa2-6cc2-439a-9f1d-de055ce04ee4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/021-JakartaEE-XML/PagoSOAP</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.interfaces.example00/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:realizarPago>
+         <monto>?</monto>
+      </soap:realizarPago>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.ws.interfaces.example00/PagoSOAP/realizarPago"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

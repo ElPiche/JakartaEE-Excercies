@@ -31,4 +31,12 @@ public class PagoSOAP {
 	public List<Pago> obtenerPagos() {
 		return pagoService.obtenerPagos();
 	}
+	
+	
+	//LT
+	@WebMethod
+	@WebResult(name = "montoTotal")
+	public int montoTotal() {
+		return pagoService.montoTotal();
+	}
 }

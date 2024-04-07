@@ -53,5 +53,17 @@ public class ClienteServiceImpl implements ClienteService {
 		
 	}
 
+	@Override
+	public Boolean existe(String nombre) {
+		List<Cliente> clientes = obternerClientes();
+		
+		for(int i = 0; i< clientes.size(); i++) {
+			if(clientes.get(i).getNombre().equalsIgnoreCase(nombre)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	
 }
