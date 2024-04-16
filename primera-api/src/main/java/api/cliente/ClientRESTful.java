@@ -5,6 +5,10 @@ import java.util.List;
 import api.Empleado;
 import api.Tarea;
 import api.aplicacion.IControladorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
@@ -18,8 +22,9 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
-
+@Tag(name="API de empleados")
 @ApplicationScoped
 @Path("/empleados")
 public class ClientRESTful {
@@ -34,6 +39,11 @@ public class ClientRESTful {
 	 * curl -v http://localhost:8080/EmpleadosAPI/api/empleados
 	 * @return
 	 */
+	@Operation(summary = "Obtener lista de empleados", description = "Obtiene una lista con todos los empelados y sus tareas.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Lista de empleados devuelta exitosamente."),
+			@ApiResponse(responseCode = "404", description = "No se encontraron empleados.")
+	})
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Empleado> obtenerEmpleados() {
@@ -46,6 +56,11 @@ public class ClientRESTful {
 	 * @param id
 	 * @return
 	 */
+	@Operation(summary = "Obtener empleado", description = "Obtiene los datos de un usuario empleado especifico.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Empleado devuelto exitosamente."),
+			@ApiResponse(responseCode = "404", description = "No se encontraró el empleado.")
+	})
 	@Path("/{id}")
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -67,6 +82,12 @@ public class ClientRESTful {
 	 * @param id
 	 * @return
 	 */
+	@Operation(summary = "Obtener tareas empleado", description = "Obtiene las tareas de un empleado especifico.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Empleado devuelto exitosamente."),
+			@ApiResponse(responseCode = "404", description = "No se encontraró el empleado."),
+			@ApiResponse(responseCode = "403", description = "Usuario no autorizado.")
+	})
 	@Path("/gerente/tareaEmpleado/{id}")
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -88,13 +109,20 @@ public class ClientRESTful {
 	 * curl -X POST -H "Content-Type: application/json" -d '{"id":1,"nombre":"Juan","cedula":"123456789"}' http://localhost:8080/EmpleadosAPI/api/empleados
 	 * @param empleado
 	 */
+	@Operation(summary = "Crear un empleado", description = "Crea un usuario de tipo empleado.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Empleado creado exitosamente"),
+			@ApiResponse(responseCode = "404", description = "No se pudo crear el empleado."),
+			@ApiResponse(responseCode = "403", description = "Usuario no autorizado.")
+	})
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) //tenemos que indicar como viene formateada la información
 	@Path("/recursosHumanos/")
 	@Produces({MediaType.APPLICATION_JSON})
-	public void crearEmpleado(Empleado empleado) {
+	public Empleado crearEmpleado(Empleado empleado) {
 		System.out.println("Creando nuevo empleado");
 		controlador.agregarEmpleados(empleado.getId(), empleado.getNombre(), empleado.getCedula());
+		return empleado;
 	}
 	
 	
@@ -110,21 +138,34 @@ public class ClientRESTful {
 	 * curl -X DELETE http://localhost:8080/EmpleadosAPI/api/empleados/0
 	 * @param id
 	 */
+	@Operation(summary = "Eliminar un empleado", description = "Eliminaun usuario de tipo empleado.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Empleado eliminado exitosamente"),
+			@ApiResponse(responseCode = "404", description = "No se pudo eliminar el empleado."),
+			@ApiResponse(responseCode = "403", description = "Usuario no autorizado.")
+	})
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/recursosHumanos/{id}") //
-	public void eliminarEmpleado(@PathParam("id") Integer id) {
+	public Response eliminarEmpleado(@PathParam("id") Integer id) {
 		System.out.println("Eliminando empleado" + id);
 		controlador.borrarEmpleados(id);
+		return  Response.status(Response.Status.CREATED).entity("El empleado con el id: " + id + " fue eliminado correctamente").build();
 	}
 	
-	//http://localhost:8080/EmpleadosAPI/api/empleados/asignarTarea?idEmpleado=1&idTarea=1
-	
+	//curl -v -X PUT -H "Content-Type: application/json" -d '{"idEmpleado":1,"idTarea":1}' https://localhost:8080/EmpleadosAPI/api/empleados/asignarTarea
+	@Operation(summary = "Asignar tarea a empleado", description = "Asigna una tarea a un empleado.")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Tarea asignada al empleado correctamente"),
+			@ApiResponse(responseCode = "404", description = "No se pudo asignar la tarea al empleado")
+	})
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/asignarTarea")
-	public void asignarTarea(@QueryParam("idEmpleado") Integer idEmpleado, @QueryParam("idTarea") Integer idTarea) {
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response asignarTarea(@QueryParam("idEmpleado") Integer idEmpleado, @QueryParam("idTarea") Integer idTarea) {
 		System.out.println("Asignando tarea con id:" + idTarea + "Al empleado con id: " + idEmpleado);
 		controlador.agregarTareaEmpleado(idEmpleado, idTarea);
+		return  Response.status(Response.Status.CREATED).entity("Tarea " + idTarea + " asignada al Empleado " +idEmpleado+ " correctamente").build();
 	}
 }
