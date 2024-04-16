@@ -54,13 +54,20 @@ public class ClientRESTful {
 		return controlador.obtenerEmpleado(id);
 	}
 	
-	
+
 	/**
+	 * Peticion rol autorizado
+	 * curl --cacert certificadoPrueba.pem --user gerente:1234 -v https://localhost:8443/EmpleadosAPI/api/empleados/gerente/tareaEmpleado/2
+	 * 
+	 * Peticion rol no autorizado
+	 * curl --cacert certificadoPrueba.pem --user recursosHumanos:1234 -v https://localhost:8443/EmpleadosAPI/api/empleados/gerente/tareaEmpleado/2
+	 * 
+	 * 
 	 * curl -v http://localhost:8080/EmpleadosAPI/api/empleados/tareaEmpleado/1
 	 * @param id
 	 * @return
 	 */
-	@Path("/tareaEmpleado/{id}")
+	@Path("/gerente/tareaEmpleado/{id}")
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Tarea> getTareasEmplead(@PathParam("id") Integer id) {
@@ -69,12 +76,21 @@ public class ClientRESTful {
 	}
 	
 	/**
+	 *
+	 * curl --user recursosHumanos:1234 -v http://localhost:8080/Build_api/api/empleados/recursosHumanos/
+	 * Peticion rol autorizado
+	 * 	 
+	 * curl --cacert certificadoPrueba.pem --user recursosHumanos:1234 -v -X POST -H "Content-Type: application/json" -d '{"id":23,"nombre":"Messi","cedula":"123456789"}' https://localhost:8443/EmpleadosAPI/api/empleados/recursosHumanos/
+	 * 
+	 * Peticion rol no autorizado
+	 * curl --cacert certificadoPrueba.pem --user gerente:1234 -v -X POST -H "Content-Type: application/json" -d '{"id":23,"nombre":"Messi","cedula":"123456789"}' https://localhost:8443/EmpleadosAPI/api/empleados/recursosHumanos/
+	 * 
 	 * curl -X POST -H "Content-Type: application/json" -d '{"id":1,"nombre":"Juan","cedula":"123456789"}' http://localhost:8080/EmpleadosAPI/api/empleados
 	 * @param empleado
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) //tenemos que indicar como viene formateada la información
-	@Path("/")
+	@Path("/recursosHumanos/")
 	@Produces({MediaType.APPLICATION_JSON})
 	public void crearEmpleado(Empleado empleado) {
 		System.out.println("Creando nuevo empleado");
@@ -83,13 +99,20 @@ public class ClientRESTful {
 	
 	
 	/**
-	 * curl -X DELETE -H "Content-Type : application/json" -d '{"id" : 0 ,}' http://localhost:8080/EmpleadosAPI/api/empleados/0
+	 * Peticion rol autorizado
+	 *curl --cacert certificadoPrueba.pem --user gerente:1234 -v -X DELETE https://localhost:8443/EmpleadosAPI/api/empleados/recursosHumanos/2
+	 *
+	 *Peticion rol no autorizado
+	 * curl --cacert certificadoPrueba.pem --user recursosHumanos:1234 -v -X DELETE https://localhost:8443/EmpleadosAPI/api/empleados/recursosHumanos/2
+	 * 
+
+	 * curl -X DELETE -H "Content-Type : application/json" -d '{"id" : 0 ,}' http://localhost:8080/EmpleadosAPI/api/empleados/1
 	 * curl -X DELETE http://localhost:8080/EmpleadosAPI/api/empleados/0
 	 * @param id
 	 */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/{id}") //
+	@Path("/recursosHumanos/{id}") //
 	public void eliminarEmpleado(@PathParam("id") Integer id) {
 		System.out.println("Eliminando empleado" + id);
 		controlador.borrarEmpleados(id);

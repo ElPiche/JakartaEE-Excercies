@@ -19,7 +19,7 @@ public class MensajeGerenteApi {
 	
 	//curl -v http://localhost:8080/03a_JakartaEE-Authorization/mensajes/gerente/enviarMensaje?mensaje=HolaMundo
 	//con la url anterior devuelve 401 no autorizado ya que no se envían las credenciales
-	
+	//curl --user usr2:1234 -v http://localhost:8080/03a_JakartaEE-Authorization/mensajes/gerente/enviarMensaje?mensaje=HolaMundo
 	//curl --user pepe:contrasenia2024 -v http://localhost:8080/03a_JakartaEE-Authorization/mensajes/gerente/enviarMensaje?mensaje=HolaMundo
 	//observar que se envían las credenciales
 	
@@ -31,7 +31,7 @@ public class MensajeGerenteApi {
 		return servicio.enviarMensajeComoGerente(mensaje);
 	}
 	
-	
+	//curl --cacert certificadoPrueba.pem --user usr3:1234 -v https://localhost:8443/03a_JakartaEE-Authorization/mensajes/gerente/enviarMensajeSeguro?mensaje=HolaMundo
 	//curl --cacert certificadoPrueba.pem --user pepe:contrasenia2024 -v https://localhost:8443/03a_JakartaEE-Authorization/mensajes/gerente/enviarMensajeSeguro?mensaje=HolaMundo
 	//Nota1 :observar como se incluye el certificado .pem para poder conectarse con ssl
 	//Este archivo contiene la llave pública del servidor
