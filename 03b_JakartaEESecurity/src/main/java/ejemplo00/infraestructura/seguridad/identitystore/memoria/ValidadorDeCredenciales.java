@@ -1,4 +1,4 @@
-package ejemplo01;
+package ejemplo00.infraestructura.seguridad.identitystore.memoria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Vetoed;
 import jakarta.security.enterprise.credential.Credential;
 import jakarta.security.enterprise.credential.UsernamePasswordCredential;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult;
@@ -17,6 +18,7 @@ import jakarta.security.enterprise.identitystore.IdentityStore;
  * tenemos control de como autenticar usuarios
  */
 @ApplicationScoped
+@Vetoed
 public class ValidadorDeCredenciales implements IdentityStore {
 	private HashMap<String, UsuarioSistema> hashUsuarios 
 		= new HashMap<String, UsuarioSistema>();
@@ -25,13 +27,16 @@ public class ValidadorDeCredenciales implements IdentityStore {
 	public void inicializar() {
 	
 		hashUsuarios.put("usr1", new UsuarioSistema("usr1", "usr1pass", 
-				new ArrayList<String>(Arrays.asList("grupo1"))));
+				new ArrayList<String>(Arrays.asList("grupo1", "admin"))));
 		
 		hashUsuarios.put("usr2", new UsuarioSistema("usr2", "usr2pass", 
 				new ArrayList<String>(Arrays.asList("grupo2"))));
 		
 		hashUsuarios.put("usr3", new UsuarioSistema("usr3", "usr3pass", 
 				new ArrayList<String>(Arrays.asList("grupo1", "grupo2"))));
+		
+		hashUsuarios.put("usr4", new UsuarioSistema("usr4", "usr4pass", 
+				new ArrayList<String>(Arrays.asList("admin"))));
 	}
 
 	/**
@@ -39,6 +44,7 @@ public class ValidadorDeCredenciales implements IdentityStore {
 	 */
 	@Override
 	public CredentialValidationResult validate(Credential credencial) {
+		System.out.println("** IdentityStore en Memoria");
 		UsernamePasswordCredential creden = (UsernamePasswordCredential)credencial;
 		//nunca jamas logear claves
 		String usuario = creden.getCaller();

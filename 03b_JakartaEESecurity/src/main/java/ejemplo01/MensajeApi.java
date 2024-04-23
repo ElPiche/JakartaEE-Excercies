@@ -1,6 +1,8 @@
 package ejemplo01;
 
+
 import ejemplo00.aplicacion.MensajeServiciosImpl;
+import ejemplo00.infraestructura.ratelimiter.RateLimiter;
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -13,22 +15,18 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 
-//En este ejemplo se está haciendo lo mismo pero si utilizar el web.xml
-@Path("/api")
-//Por defecto no permito ejecutar nada sin permisos
+
+//Por defecto no permito ejecutar nada sin permisos. 
+//Buena práctica
 @DenyAll
-@BasicAuthenticationMechanismDefinition(realmName = "ApplicationRealm")
-//El contenedor negocia con el cliente el envío de credenciales si las mismas no 
-//vienen en el request
-//El realm puede ser visto como el alcance o area dentro de la aplicación (recursos)
-//donde aplican estas políticas de seguridad. El cliente cuando envía las credenciales
-//las envía para un determinado realm. 
-@DeclareRoles({"grupo1", "grupo2"})
+@Path("/api")
 public class MensajeApi  {
 
 	@Inject
 	private MensajeServiciosImpl servicios;
 	
+	
+	//curl --user usr1:usr1pass -v http://localhost:8080/03b_JakartaEESecurity/seguro/api/enviarMensaje?valor=Hola
 	@GET
 	@Path("/enviarMensaje")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -37,6 +35,7 @@ public class MensajeApi  {
 		return servicios.enviarMensajeComoGerente(mensaje);
 	}
 	
+	//curl --user usr2:usr2pass -v http://localhost:8080/03b_JakartaEESecurity/seguro/api/enviarMensaje2?valor=Hola2
 	@GET
 	@Path("/enviarMensaje2") 
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -44,4 +43,6 @@ public class MensajeApi  {
 	public String enviarMensajeTipoB(@QueryParam("valor") String mensaje) {
 		return servicios.enviarMensajeComoGerente(mensaje);
 	}
+	
+	
 }

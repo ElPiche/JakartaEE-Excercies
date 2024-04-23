@@ -1,4 +1,4 @@
-package ejemplo01;
+package ejemplo00.infraestructura.seguridad.identitystore.memoria;
 
 import java.util.ArrayList;
 
