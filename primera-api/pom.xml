@@ -33,7 +33,15 @@
 	</properties>
 
 	<dependencies>
-		
+
+		<!--  jboss-logging API -->
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.5.3.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-jaxrs2-jakarta</artifactId>
@@ -106,7 +114,7 @@
 		    <artifactId>okhttp</artifactId>
 		    <version>4.12.0</version>
 		</dependency>
-		
+
 	</dependencies>
 	
 	
@@ -124,6 +132,20 @@
 				<configuration>
 					<version>${wildfly.version}</version>
 					<server-config>standalone-full.xml</server-config>
+					<add-user>
+						<users>
+							<user>
+								<username>root</username>
+								<password>rootpass1234</password>
+								<application-user>false</application-user>
+							</user>
+						</users>
+					</add-user>
+
+					<scripts>
+						<script>config.cli</script>
+					</scripts>
+
 				</configuration>
 			</plugin>
 

@@ -1,0 +1,33 @@
+
+Creo el handler para el archivo que acepta logs de INFO y DEBUG
+
+/subsystem=logging/file-handler=FILE_DEBUG_INFO:add(append=true, level=DEBUG, named-formatter=PATTERN, file={"path"=>"pruebaLogs.log", "relative-to"=>"jboss.server.log.dir"})
+
+Creo el logger para archivo de DEBUG e INFO. El logger actua copmo un componente que determina que logs se envian al handler, sin el no se registra nada.
+
+/subsystem=logging/logger=api.cliente:add(handlers=[FILE_DEBUG_INFO])
+
+
+/subsystem=logging/file-handler=FILE_DEBUG_INFO:write-attribute(name="level", value="DEBUG")
+
+
+/*********************************************************************************************************************/
+
+Creo el hanlder para el archivo que solo acepta logs de DEBUG.
+
+/subsystem=logging/file-handler=FILE_HANDLER_DEBUG:add(append=true, level=DEBUG, named-formatter=PATTERN, file={"path"=>"pruebaLogsDEBUG.log", "relative-to"=>"jboss.server.log.dir"})
+
+Agrego el handler al logger para archivo que solo acepta DEBUG
+/subsystem=logging/logger=api.cliente:add-handler(name=FILE_HANDLER_DEBUG)
+
+Comando para modificar el Handler y aceptar solo Logs de nivel DEBUG
+/subsystem=logging/handler=FILE_HANDLER_DEBUG:write-attribute(name="level", value="DEBUG")
+
+
+/*****************************************/
+
+Utilizar aop en ambos handlers
+
+/subsystem=logging/logger=api.aop:add(handlers=[FILE_DEBUG_INFO]) //este formato es con el primer handler.
+
+/subsystem=logging/logger=api.aop:add-handler(name=FILE_HANDLER_DEBUG) //los demas se agregan asi.

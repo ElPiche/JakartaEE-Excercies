@@ -2,13 +2,25 @@ package api;
 
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+
+@Entity
 public class Empleado {
 
-	private String nombre;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	private String nombre;
+
 	private String cedula;
 
+	@Transient
 	private List<Tarea> tareasEmpleado;
 	
 	public Empleado() {

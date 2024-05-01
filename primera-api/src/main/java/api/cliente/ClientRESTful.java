@@ -17,18 +17,24 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.jboss.logging.Logger;
+import api.aop.MedirTiempos;
 
 @Tag(name="API de empleados")
 @ApplicationScoped
 @Path("/empleados")
+@MedirTiempos
 public class ClientRESTful {
-	
+
+	private static final Logger log = Logger.getLogger(ClientRESTful.class);
+
 	@Inject
 	private IControladorService controlador;
 	
@@ -46,9 +52,14 @@ public class ClientRESTful {
 	})
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
+
 	public List<Empleado> obtenerEmpleados() {
-		System.out.println("Retornando todos los empleados");
-		return controlador.listarEmpleados();
+
+		List<Empleado> empleados = controlador.listarEmpleados();
+
+		log.debug("Retornando una lista de empleados");
+
+		return empleados;
 	}
 	
 	/**
@@ -65,7 +76,7 @@ public class ClientRESTful {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public Empleado getEmpleado(@PathParam("id") Integer id) {
-		System.out.println("Buscando empleado especifico" + id);
+		System.out.println("Buscando empleado especifico " + id);
 		return controlador.obtenerEmpleado(id);
 	}
 	

@@ -1,13 +1,24 @@
 package api;
 
 import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+@Entity
 public class Tarea {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String descripcion;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
+
+	@ManyToOne
+	private Empleado empleado;
 	
 	public Tarea() {
 		
